@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+
+var subjectObject = {
+
+  "BCom": {
+
+    "A": ["English-10", "Maths-20", "Physics-30"],
+
+    "B": ["Web-25", "AI-35", "Cyber-45"],
+
+    "C": ["Automata-50", "AIML-60", "Maths-80",],
+
+  },
+
+  "MCom": {
+
+    "M": ["null", "null", "null"],
+
+    "B": ["OS-23", "EQ-50", "null"]
+
+  },
+
+  "BBA": {
+
+    "S":["Maths-MTRC69","English-699669"]
+
+  }
+
+}
+
+window.onload = function() {
+
+  var subjectSel = document.getElementById("Department");
+
+  var topicSel = document.getElementById("Title");
+
+  var chapterSel = document.getElementById("Semester");
+
+  for (var x in subjectObject) {
+
+    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+
+  }
+
+  subjectSel.onchange = function() {
+
+    //empty Chapters- and Topics- dropdowns
+
+    chapterSel.length = 1;
+
+    topicSel.length = 1;
+
+    //display correct values
+
+    for (var y in subjectObject[this.value]) {
+
+      topicSel.options[topicSel.options.length] = new Option(y, y);
+
+    }
+
+  }
+
+  topicSel.onchange = function() {
+
+    //empty Chapters dropdown
+
+    chapterSel.length = 1;
+
+    //display correct values
+
+    var z = subjectObject[subjectSel.value][this.value];
+
+    for (var i = 0; i < z.length; i++) {
+
+      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+
+    }
+
+  }
+
+}
+
+</script>
+
+</head>  
+
+<body>
+
+ 
+
+<h1>Cascading Dropdown Example</h1>
+
+ 
+
+<form name="form1" id="form1" action="sobe" method="POST">
+
+Program: <select name="Department" id="Department">
+
+    <option value="" selected="selected">Select subject</option>
+
+  </select>
+
+  <br><br>
+
+Departmental: <select name="Title" id="Title">
+
+    <option value="" selected="selected">Please select subject first</option>
+
+  </select>
+
+  <br><br>
+
+Paper Name and Code: <select name="Semester" id="Semester">
+
+    <option value="" selected="selected">Please select topic first</option>
+
+  </select>
+
+  <br><br>
+
+  <input type="submit" value="Submit"> 
+
+</form>
+
+ 
+
+</body>
+
+</html>

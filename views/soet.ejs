@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="view-source:https://bootswatch.com/cosmo/" />
+<link
+    rel="stylesheet"
+    href="https://bootswatch.com/4/cosmo/bootstrap.css"
+/>
+
+<script>
+
+var subjectObject = {
+
+    "BTech": {
+
+    "CSE": ["Engineering Mathematics(I)-SMA41101","Engineering Physics-SPH41109","Engineering Chemistry-SCY41106","HSSM I(English Communication)-HEN41117","HSSM II(Engineering Ethics, Values and the Laws)-HEN41119","Life Sciences-SBT41108","Engineering Physics Lab-SPH41209","Engineering Chemistry Lab-SCY41206","Programming Lab-ECS41201","Electrical and Electronics Technology Lab-EEE41202","Engineering Drawing and CAD-ECE41201","Engineering Workshop-EME41202","Communication and Collaboration Skill(I)-EMC41201","Engineering Mathematics(II)-SMA41102","Engineering Chemistry-SCY41106","Engineering Physics-SPH41109","Electrical and Electronics Technology-EEE41102","Introduction to Programming-ECS41101","Engineering Mechanics-EME41104","HSSM III(Professional Communication in English)-HEN41212","HSSM IV(Economics for Engineers)-HEC42180","Probability, Statistics and Numerical Methods-SMA42111","Introduction to Python-ECS42107","Switching Circuits and Logic Design-ECS42105","Formal Language and Automata Theory-ECS42103","Data Structure and Algorithm-ECS42101","Data Structure and Algorithms Lab-ECS42201","Design Thinking for Engineers-EMC42101","Capstone Project A-SET42403","Operations Research-ECS42110","Design and Analysis of Algorithm-ECS42112","Object Oriented Programming-ECS42114","Software Engineering-ECS43101","Computer Architecture-ECS43103","Numerical Techniques Lab-SMA42211","Design and Analysis of Algorithm Lab-ECS42212","Object oriented programming lab-ECS42214","Interdisciplinary project work-SET42406","Capstone Project B-SET42404","Compiler Design-ECS43105","Database Management Systems-ECS43107","Operating Systems-ECS43102","Compiler Design Lab-ECS43205","Database Management Systems Lab-ECS43207","Operating SYstems Lab-ECS43202","Venture Ideation for Begineers-SET43101","Capstone Project C-SET43403","Computer Networks-ECS43104","Artificial Intelligence and Machine Learning-ECS43106","Computer Networks Lab-ECS43204","Artificial Intelligence and Machine Learning Lab-ECS43206","HSSM V(Industrial Management)-MBA43144","Summer Internship-ECS44601","Minor project-ECS44401","Industry Work Experience/SIRE/Major Project-ECS44402","Comprehensive Viva Voce-Ecs44502"],
+    
+    "ME":["Engineering Mathematics I-SMA41101","Introduction to Programming-ECS41101","Electrical and Electronics Technology-EEE41102","HSSM I(English Communication-I)-HEN41117","HSSM II(Human Values and Ethics and Psychology)-HEN41119","Life Sciences-SBT41108","Programming Lab-ECS41201","Electrical and Electronics Technology Lab-EEE41202","Engineering Drawing and CAD-ECE41201","Engineering Workshop-EME41204","Communication and Collaboration Skill I-EMC41201","Engineering Mathematics II-SMA41102","Electrical and Electronics Technology-EEE41102","Introduction to Programming-ECS41101","Life Sciences-SBT41108","HSSM II (Human Values & Ethics and Psychology)-HEN41119","Engineering Mechanics-EME41102","Environmental Science-SGY41113","Electrical and Electronics Technology Lab-EEE41202","Programming Lab-ECS41201","Engineering Workshop-EME41204","Engineering Drawing and CAD-ECE41201","Communication and Collaboration Skill II-EMC41202","Engineering Mathematics IIIA-SMA42113","Materials Engineering-EME42109","HSSM IV(Economics for Engineers)-HEC42180","Mechanics of Materials-EME42111","Fluid Mechanics-EME42113","Engg. Thermodynamics-EME42115","Material Testing Lab-EME42209","Numerical Techniques-SMA42116","Fluid Machinery-EME42112","Manufacturing Technology I-EME42114","Kinematics of Machines-EME42116","Design of Machine Elements-EME42118","Numerical Techniques Lab-SMA42216","Fluid Mechanics & Hydraulic Machinery Lab-EME42212","Applied Thermodynamics-EME43115","Manufacturing Technology II-EME43119","Dynamics of Machines-EME43121","Manufacturing Technology Lab II-EME43219","Kinematics & Dynamics of Machines Lab-EME43221","Machine Drawing with AutoCAD-EME43223","Heat Transfer-EME43116","Metrology & Measurement-EME43118","Applied Thermodynamics & Heat Transfer Lab-EME43216","Metrology & Measurement Lab-EME43218","HSSM V (Industrial Management)-MBA43144","Summer Internship-EME44601","Minor Project-EME44403","Industry Work Experience-EME44602","Major Project-EME44604","Comprehensive Viva Voce-EME44502"],
+    
+
+    "CE": ["Automata-50", "AIML-60", "Maths-80",],
+
+  },
+
+  "BCA": {
+
+    "BCA Hons": ["null", "null", "null"],
+
+    "BCA Gnrl": ["OS-23", "EQ-50", "null"]
+
+  },
+
+  "BSC": {
+
+    "BSC":["Maths-MTRC69","English-699669"]
+
+  }
+
+}
+
+window.onload = function() {
+
+  var subjectSel = document.getElementById("Program");
+
+  var topicSel = document.getElementById("Department");
+
+  var chapterSel = document.getElementById("Paper");
+
+  for (var x in subjectObject) {
+
+    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+
+  }
+
+  subjectSel.onchange = function() {
+
+    //empty Chapters- and Topics- dropdowns
+
+    chapterSel.length = 1;
+
+    topicSel.length = 1;
+
+    //display correct values
+
+    for (var y in subjectObject[this.value]) {
+
+      topicSel.options[topicSel.options.length] = new Option(y, y);
+
+    }
+
+  }
+
+  topicSel.onchange = function() {
+
+    //empty Chapters dropdown
+
+    chapterSel.length = 1;
+
+    //display correct values
+
+    var z = subjectObject[subjectSel.value][this.value];
+
+    for (var i = 0; i < z.length; i++) {
+
+      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+
+    }
+
+  }
+
+}
+
+</script>
+
+</head>  
+
+<body
+  class="img-fluid"
+  style="background-image: url('https://i.ibb.co/LRbxz2V/adamas1.jpg')
+  "
+  >
+    <div class="fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <p class="navbar-brand" href="#">Adamas University</p> <br>
+        <p class="navbar-brand" href="#">C.O.E Page</p>
+      </nav>
+    </div>
+
+    <div
+      class="row row d-flex justify-content-center"
+      style="
+      margin-top: 125px;
+      "
+    >
+      <div class="lg-6">
+        <div class="card  mb-3" style="max-width: 50rem">
+          <div class="card-header">Choose options</div>
+          <div class="card-body">
+            <form name="form1" id="form1" action="soet" method="POST">
+
+                <b>Program:</b> <select name="Program" id="Program">
+                
+                    <option value="" selected="selected">Select program</option>
+                
+                  </select>
+                
+                  <br><br>
+                
+                <b>Department: </b><select name="Department" id="Department">
+                
+                    <option value="" selected="selected">Please select program first</option>
+                
+                  </select>
+                
+                  <br><br>
+    
+                <b>Semester: </b><select name="Semester" id="Semester">
+                <option value="I" name="I">I</option>
+                <option value="II" name="II">II</option>
+                <option value="III" name="III">III</option>
+                <option value="IV" name="IV">IV</option>
+                <option value="V" name="V">V</option>
+                <option value="VI" name="VI">VI</option>
+                <option value="VII" name="I">VII</option>
+                <option value="VIII" name="VIII">VIII</option>
+                </select><br><br>
+                
+                <b>Paper Name and Code: </b><select name="Paper" id="Paper">
+                
+                    <option value="" selected="selected">Please select department first</option>
+                
+                  </select>
+                
+                  <br><br>
+                
+                  <input type="submit" value="Generate paper"> 
+                
+                </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
