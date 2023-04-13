@@ -4,8 +4,9 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var XLSX = require("xlsx");
 const cors = require("cors");
-// const PythonShell = require('python-shell').PythonShell;`
-var functions = require("./functions")
+const PythonShell = require('python-shell').PythonShell;
+var csv = require("csvtojson");
+
 
 const os = require("os");
 const multer = require("multer");
@@ -32,9 +33,24 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
+var empSchema = new mongoose.Schema({  
+    "NameoftheProgram": {
+        type: String
+      },
+      "PaperTitle": String,
+      "PaperCode": String,
+      "Semester": String,
+      "Question": mongoose.Schema.Types.Mixed,
+      "CourseOutcome": String,
+      "Marks": String
+});  
+var empModel = mongoose.model("empschema", empSchema)
 
 var excelSchema = new mongoose.Schema({
-  "Department": String,
+  "Name of the Program": {
+    type: String,
+    required: [true, "You entered wrong name of program"]
+  },
   "Paper Title": String,
   "Paper Code": String,
   "Semester": String,
@@ -46,7 +62,7 @@ var excelSchema = new mongoose.Schema({
 var excelModel = mongoose.model("exceldata", excelSchema);
 var schoolValue = new mongoose.Schema({
   "num": Number,
-  "Name Of The School": String
+  "Name of the program": String
 })
 var schooldata = mongoose.model("schooldata", schoolValue);
 var dropdownValue = new mongoose.Schema({
@@ -108,44 +124,70 @@ app.get("/image", (req, res) => {
   res.render("image");
 });
 
-app.get("/python", (req, res) => {
-  res.render("python");
-});
-
-// app.get("/pdf", (req, res) => {
-//   res.render("pdf2");
-// });
-app.get('/pdf', (req, res) => {
-  res.render('pdf2.ejs', {
-                 data: {
-                    function: functions.optionClickFunc
-                 }
-             });
- });
+app.get("/index", (req, res) => {
+    res.render("index");
+  });
 
 app.get("*", (req, res) => {
   res.render("error");
 });
 
-app.post("/", upload.single("excel"), (req, res) => {
+app.get('/index', (req, res) => {
+    empModel.find((err, data) => {
+        if (err) {
+            console.log(err);
+          } else {
+            res.render("index", { data: data });
+          }
+    })
+})
+var empResponse
+app.post('/index', upload.single('csvFile'), (req, res) => {
+    XLSX.readFile(req.file.path)
+      .then((response) => {
+        for (var x = 0; x < response; x++) {
+          empResponse = parseFloat(response[x].NameoftheProgram)
+          response[x].NameoftheProgram = empResponse
+          empResponse = parseFloat(response[x].PaperTitle)
+          response[x].PaperTitle = empResponse
+          empResponse = parseFloat(response[x].PaperCode)
+          response[x].PaperCode = empResponse
+          empResponse = parseFloat(response[x].Semester)
+          response[x].Semester = empResponse
+          empResponse = parseFloat(response[x].Question)
+          response[x].Semester = empResponse
+          empResponse = parseFloat(response[x].CourseOutcome)
+          response[x].CourseOutcome = empResponse
+          empResponse = parseFloat(response[x].Marks)
+          response[x].Marks = empResponse
+        }
+        empModel.insertMany(response, (err, data) => {
+          if (err) {
+            console.log(err)
+          } else {
+            res.redirect('/')
+          }
+        })
+      })
+  })
+  
+
+app.post("/", upload.single("excel"),(req, res) => {
   var workbook = XLSX.readFile(req.file.path);
   var sheet_namelist = workbook.SheetNames;
+  console.log(sheet_namelist);
   var x = 0;
   sheet_namelist.forEach((element) => {
-    var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_namelist[x]]);
-    excelModel.insertMany(xlData, (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(data);
-      }
-    });
+    var y = workbook.Sheets[sheet_namelist[x]];
+    var xlData = XLSX.utils.sheet_to_json(y);
+
+    excelModel.insertMany(xlData);
     x++;
   });
   res.redirect("/");
 });
 app.post("/school", (req, res) => {
-  var { NOS } = req.body;
+  var { NOP } = req.body;
   mongoose.connection.db
     .collection("schooldatas")
     .count(function (err, count) {
@@ -155,7 +197,7 @@ app.post("/school", (req, res) => {
       if (count == 0) {
         var value = new schooldata({
           "num": 1,
-          "Name Of The School": NOS
+          "Name of the program": NOP
         });
         value.save();
       } else {
@@ -163,7 +205,7 @@ app.post("/school", (req, res) => {
           const result = await schooldata.updateOne(
             { num },
             { $set: { 
-              "Name Of The School": NOS
+              "Name of the program": NOP
             } }
           );
         };
@@ -175,7 +217,7 @@ app.post("/school", (req, res) => {
   // }else{
   //   res.redirect("/SOBE")
   // }
-  switch(NOS){
+  switch(NOP){
     case "SOET":
       res.redirect("/SOET");
     case "SOBE":
@@ -199,14 +241,9 @@ app.post("/school", (req, res) => {
   }
   
 });
-app.post("/pdf", (req,res) => {
-  res.redirect("/school")
-})
 
 app.post("/soet", (req, res) => {
   var {Program, Department, Semester, Paper } = req.body;
-  console.log(req.body.Program);
-  console.log(req.body.Program);
   mongoose.connection.db
     .collection("dropdowndatas")
     .count(function (err, count) {
@@ -562,11 +599,6 @@ app.post("/sosa", (req, res) => {
   res.redirect("/school")
   
 });
-
-module.exports = {
-  excelModel, dropdowndata, schooldata
-}
-
 var port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server run at " + port));
 

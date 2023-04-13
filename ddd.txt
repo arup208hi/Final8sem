@@ -1,0 +1,92 @@
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/endterm', {useNewUrlParser: true});
+var conn = mongoose.connection;
+conn.on('connected', function() {
+    console.log('database is connected successfully');
+});
+conn.on('disconnected',function(){
+    console.log('database is disconnected successfully');
+})
+conn.on('error', console.error.bind(console, 'connection error:'));
+module.exports = conn;
+
+
+const express = require("express");
+const path = require("path")
+var bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/ppp", (req, res)=>{
+    res.render("ppp")
+}) 
+app.listen(5000, () => {
+  console.log(`Server is up and running on 5000 ...`);
+});
+  
+
+
+
+// const express = require("express");
+// localStorage.setItem("lastname", "Smith");
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+    app.get("/ppp", (req, res) => {
+  
+        // let data = {
+        //     name: "GFG",
+        //     age: 18,
+        //     male: true
+        // }
+        
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("endterm");
+            dbo.collection("dropdowndatas").find({}, { projection: { _id: 0 } }).toArray(function(err, result) {
+              if (err) throw err;
+              console.log(result);
+        res.render(ppp, {data : result});
+    });
+    // sessionStorage.setItem(result);
+    // localStorage.setItem("dropdown", JSON.stringify(result));
+    // for (const [key, value] of Object.entries(result)) {
+    //   // console.log(key, value);
+    //   sessionStorage.setItem(key, value);
+    //   // localStorage.setItem(key, value);
+    // }
+
+    // let lastname = localStorage.getItem("Department");
+    // console.log(lastname);
+
+    // var result1 = [];
+    // var keys = Object.keys(result);
+    // keys.forEach(function(key){
+    //     // result1.push(result[key]);
+    //     console.log(result[key]);
+
+    // const data = localStorage.getItem("dropdown");
+    // console.log("data: ", JSON.parse(data));
+
+    db.close();
+    // var user = sessionStorage.getItem("Department");
+    // var user = localStorage.getItem("dropdown".);
+    // console.log();
+
+  });
+  // return result1;
+});
+
+// var user = sessionStorage.getItem("Department");
+// // var user = localStorage.getItem("dropdown");
+// console.log(user);
+
+// let lastname = localStorage.getItem("Department");
+// console.log(lastname);

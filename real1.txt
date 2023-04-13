@@ -1,0 +1,9 @@
+1> Which of the following is not a sequential circuit? 1)Flip-Flop 2)Counter 3)Shift register 4)Multiplexer           ['2', '2', '2', '2', '2', '2', '2', '2']           ['1', '1', '1', '1', '1', '1', '1', '1']
+2> A variable on its own or in its complemented form is known as: a) Product Term b) Literal c) Sum Term d) Word           ['3', '3', '3', '3', '3', '3', '3', '3']           ['1', '1', '1', '1', '1', '1', '1', '1']
+3> 3 bits full adder contains a)3 combinational inputs b) 4 combinational inputs c)6 combinational inputs d) 8 combinational inputs           ['3', '3', '3', '3', '3', '3', '3', '3']           ['1', '1', '1', '1', '1', '1', '1', '1']
+4> The output of an EX-NOR gate is 1. Which input combination is correct? a) A = 1, B = 0 b) A = 0, B = 1 c) A = 0, B = 0 d) A = 0, B = 1.           ['1', '1', '1', '1', '1', '1', '1', '1']           ['1', '1', '1', '1', '1', '1', '1', '1']
+5> The output of an EX-NOR gate is 1. Which input combination is correct? a) A = 1, B = 0 b) A = 0, B = 1 c) A = 0, B = 0 d) A = 0, B = 1.           ['1', '1', '1', '1', '1', '1', '1', '1']           ['1', '1', '1', '1', '1', '1', '1', '1']
+-----------------------------------------------------------------------------------------------------------6> Explain the process of converting SOP to SSOP and POS to SPOS.           [2]           [5]
+7> Explain the major properties of Boolean algebra            [1]           [5]
+8> Explain the process of converting SOP to SSOP and POS to SPOS.           [2]           [5]
+--------------------------------------------------------------------------------------------------------------

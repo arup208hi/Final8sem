@@ -12,11 +12,8 @@
 />
 
 <script>
-  function runPython(){
-    exec('python new.py');
-  }
 
-  var subjectObject = {
+var subjectObject = {
 
     "BTech": {
 
@@ -67,6 +64,8 @@
 
 
 }
+
+
 
 window.onload = function() {
 
@@ -120,8 +119,6 @@ window.onload = function() {
 
 }
 
-
-
 </script>
 
 </head>  
@@ -148,7 +145,7 @@ window.onload = function() {
         <div class="card  mb-3" style="max-width: 50rem">
           <div class="card-header">Choose options</div>
           <div class="card-body">
-            <form name="form1" id="form1" action="soet"  method="POST">
+            <form name="form1" id="form1" action="soet" method="POST">
 
                 <b>Program:</b> <select name="Program" id="Program">
                 
@@ -185,7 +182,7 @@ window.onload = function() {
                 
                   <br><br>
                 
-                  <input type="submit" value="Generate paper" onclick="runPython()"> 
+                  <input type="submit" value="Generate paper"> 
                 
                 </form>
           </div>

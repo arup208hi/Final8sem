@@ -4,15 +4,15 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var XLSX = require("xlsx");
 const cors = require("cors");
-// const PythonShell = require('python-shell').PythonShell;`
-var functions = require("./functions")
+const PythonShell = require('python-shell').PythonShell;
+
 
 const os = require("os");
 const multer = require("multer");
 const upload = multer({ dest: os.tmpdir() });
 
 mongoose
-  .connect("mongodb://localhost:27017/arup3", {
+  .connect("mongodb://localhost:27017/arup4", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -32,9 +32,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-
 var excelSchema = new mongoose.Schema({
-  "Department": String,
+  "Name of the Program": {
+    type: String,
+    required: [true, "You entered wrong name of program"]
+  },
   "Paper Title": String,
   "Paper Code": String,
   "Semester": String,
@@ -46,7 +48,7 @@ var excelSchema = new mongoose.Schema({
 var excelModel = mongoose.model("exceldata", excelSchema);
 var schoolValue = new mongoose.Schema({
   "num": Number,
-  "Name Of The School": String
+  "Name of the program": String
 })
 var schooldata = mongoose.model("schooldata", schoolValue);
 var dropdownValue = new mongoose.Schema({
@@ -108,21 +110,6 @@ app.get("/image", (req, res) => {
   res.render("image");
 });
 
-app.get("/python", (req, res) => {
-  res.render("python");
-});
-
-// app.get("/pdf", (req, res) => {
-//   res.render("pdf2");
-// });
-app.get('/pdf', (req, res) => {
-  res.render('pdf2.ejs', {
-                 data: {
-                    function: functions.optionClickFunc
-                 }
-             });
- });
-
 app.get("*", (req, res) => {
   res.render("error");
 });
@@ -132,7 +119,7 @@ app.post("/", upload.single("excel"), (req, res) => {
   var sheet_namelist = workbook.SheetNames;
   var x = 0;
   sheet_namelist.forEach((element) => {
-    var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_namelist[x]]);
+    var xlData = XLSX.utils.sheet_to_formulae(workbook.Sheets[sheet_namelist[x]]);
     excelModel.insertMany(xlData, (err, data) => {
       if (err) {
         console.log(err);
@@ -145,7 +132,7 @@ app.post("/", upload.single("excel"), (req, res) => {
   res.redirect("/");
 });
 app.post("/school", (req, res) => {
-  var { NOS } = req.body;
+  var { NOP } = req.body;
   mongoose.connection.db
     .collection("schooldatas")
     .count(function (err, count) {
@@ -155,7 +142,7 @@ app.post("/school", (req, res) => {
       if (count == 0) {
         var value = new schooldata({
           "num": 1,
-          "Name Of The School": NOS
+          "Name of the program": NOP
         });
         value.save();
       } else {
@@ -163,7 +150,7 @@ app.post("/school", (req, res) => {
           const result = await schooldata.updateOne(
             { num },
             { $set: { 
-              "Name Of The School": NOS
+              "Name of the program": NOP
             } }
           );
         };
@@ -175,7 +162,7 @@ app.post("/school", (req, res) => {
   // }else{
   //   res.redirect("/SOBE")
   // }
-  switch(NOS){
+  switch(NOP){
     case "SOET":
       res.redirect("/SOET");
     case "SOBE":
@@ -199,14 +186,9 @@ app.post("/school", (req, res) => {
   }
   
 });
-app.post("/pdf", (req,res) => {
-  res.redirect("/school")
-})
 
 app.post("/soet", (req, res) => {
   var {Program, Department, Semester, Paper } = req.body;
-  console.log(req.body.Program);
-  console.log(req.body.Program);
   mongoose.connection.db
     .collection("dropdowndatas")
     .count(function (err, count) {
@@ -562,11 +544,6 @@ app.post("/sosa", (req, res) => {
   res.redirect("/school")
   
 });
-
-module.exports = {
-  excelModel, dropdowndata, schooldata
-}
-
 var port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server run at " + port));
 
