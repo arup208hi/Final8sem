@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var XLSX = require("xlsx");
 const cors = require("cors");
-// const PythonShell = require('python-shell').PythonShell;
+const PythonShell = require('python-shell').PythonShell;
 
 
 const os = require("os");
@@ -189,7 +189,8 @@ app.post("/school", (req, res) => {
 });
 
 app.post("/soet", (req, res) => {
-  var {Program, Department, Semester, Paper } = req.body;
+  var {Program, Department, Semester, Paper, Clicked } = req.body;
+  console.log(Clicked);
   mongoose.connection.db
     .collection("dropdowndatas")
     .count(function (err, count) {
@@ -220,6 +221,12 @@ app.post("/soet", (req, res) => {
         updateDocument(1);
       }
     });
+    if(Clicked == "Generate"){
+        PythonShell.run('main3.py', null, function (err) {
+            if (err) throw err;
+            console.log('finished');
+          });
+    }
   res.redirect("/school")
   
 });

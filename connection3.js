@@ -17,7 +17,6 @@ function generatePaper(){
     .then(data => {
         // console.log("Database Courses:")
         // console.log(data);
-
         // Putting all course id's in dbcourse array
         // data.map((d, k) => {
         //     dbcourse.push(d._id);
