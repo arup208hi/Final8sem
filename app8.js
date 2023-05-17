@@ -5,6 +5,7 @@ var path = require("path");
 var XLSX = require("xlsx");
 const cors = require("cors");
 const PythonShell = require('python-shell').PythonShell;
+const fs = require("fs")
 
 
 const os = require("os");
@@ -110,6 +111,12 @@ app.get("/image", (req, res) => {
   res.render("image");
 });
 
+app.get('/pdf', (req, res) => {
+  var data =fs.readFileSync('output.pdf');
+  res.contentType("application/pdf");
+  res.send(data);
+  });
+  
 app.get("*", (req, res) => {
   res.render("error");
 });
@@ -227,7 +234,7 @@ app.post("/soet", (req, res) => {
             console.log('finished');
           });
     }
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 app.post("/sobe", (req, res) => {
@@ -262,7 +269,7 @@ app.post("/sobe", (req, res) => {
           updateDocument(1);
         }
       });
-    res.redirect("/school")
+    res.redirect("/pdf")
     
   });
 
@@ -298,7 +305,7 @@ app.post("/sobas", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -334,7 +341,7 @@ app.post("/soe", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -370,7 +377,7 @@ app.post("/solas", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -406,7 +413,7 @@ app.post("/solb", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -442,7 +449,7 @@ app.post("/solj", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -478,7 +485,7 @@ app.post("/somc", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 
@@ -514,7 +521,7 @@ app.post("/soms", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 app.post("/sosa", (req, res) => {
@@ -549,7 +556,7 @@ app.post("/sosa", (req, res) => {
         updateDocument(1);
       }
     });
-  res.redirect("/school")
+  res.redirect("/pdf")
   
 });
 var port = process.env.PORT || 3000;
