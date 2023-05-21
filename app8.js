@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 var excelSchema = new mongoose.Schema({
-  "Name of the Program": {
+  "Department": {
     type: String,
     required: [true, "You entered wrong name of program"]
   },
@@ -111,8 +111,9 @@ app.get("/image", (req, res) => {
   res.render("image");
 });
 
+
 app.get('/pdf', (req, res) => {
-  var data =fs.readFileSync('output.pdf');
+  var data =fs.readFileSync('midsem45.pdf');
   res.contentType("application/pdf");
   res.send(data);
   });
@@ -126,7 +127,7 @@ app.post("/", upload.single("excel"), (req, res) => {
   var sheet_namelist = workbook.SheetNames;
   var x = 0;
   sheet_namelist.forEach((element) => {
-    var xlData = XLSX.utils.sheet_to_formulae(workbook.Sheets[sheet_namelist[x]]);
+    var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_namelist[x]]);
     excelModel.insertMany(xlData, (err, data) => {
       if (err) {
         console.log(err);
